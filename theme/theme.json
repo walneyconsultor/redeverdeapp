@@ -3,6 +3,11 @@
     "default_color": "#007219"
   },
   "background": {
-    "light_green": "#5AB26D"
+    "light_green": "#D8DCD9"
+  },
+  "buttons": {
+    "border_color": "#96D54E",
+    "bg_color": "#4D9A31",
+    "text_color": "#FFFFFF"
   }
 }
