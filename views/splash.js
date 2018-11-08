@@ -1,10 +1,11 @@
 import React from 'react';
 import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
 import Modal from "react-native-modal";
+import Card from '../components/Card';
 
 import theme from '../theme/theme.json';
 
-import LoginForm from '../components/LoginForm.js';
+// import LoginForm from '../components/LoginForm.js';
 import Logo from '../assets/img/logo2.png';
 
 import {
@@ -18,9 +19,11 @@ import {
 const SplashModal = props => {
   return (
     <View>
-      <Modal isVisible = { props.isVisible }>
-       <View style     = { styles.modal }>
-         <Text>OIEEEEEE SOU UMA MODAL</Text>
+      <Modal isVisible  = { props.isVisible }>
+       <View style      = { styles.modal }>
+         <Card
+           onCloseModal = { props.onCloseModal }
+           />
        </View>
      </Modal>
    </View>
@@ -39,17 +42,26 @@ class Splash extends React.Component {
     })
   }
 
+  onCloseModal = () => {
+    console.log('teste');
+    this.setState({
+      isModalOpen: false
+    })
+  }
+
   render() {
 
     const { isModalOpen } = this.state;
-    console.warn(isModalOpen);
+
     return (
       <View style={ styles.view }>
 
-        <SplashModal isVisible = { isModalOpen } />
+        <SplashModal
+          onCloseModal = { this.onCloseModal }
+          isVisible    = { isModalOpen } />
 
         <StatusBar
-          backgroundColor={ theme.statusbar.default_color } />
+          backgroundColor = { theme.statusbar.default_color } />
 
         <Image
           style  = { styles.logo }
@@ -99,7 +111,11 @@ const styles = StyleSheet.create({
   },
 
   modal: {
-    flex: 1
+    flex            : 1,
+    backgroundColor : 'transparent',
+    display         : 'flex',
+    justifyContent  : 'center',
+    alignItems      : 'center'
   }
 
 })
