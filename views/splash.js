@@ -3,9 +3,10 @@ import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/ric
 import Modal from "react-native-modal";
 import Card from '../components/Card';
 
+import Banner from '../assets/img/ecologia-e1459743249819.jpg';
+
 import theme from '../theme/theme.json';
 
-// import LoginForm from '../components/LoginForm.js';
 import Logo from '../assets/img/logo2.png';
 
 import {
@@ -22,7 +23,11 @@ const SplashModal = props => {
       <Modal isVisible  = { props.isVisible }>
        <View style      = { styles.modal }>
          <Card
-           onCloseModal = { props.onCloseModal }
+           imageTitle   = "Você já possui uma conta?"
+           imageSource  = { Banner }
+           content      = "Caso já possua uma conta, clique em 'SIM' para poder logar."
+           onConfirm    = { props.onConfirm }
+           onClose      = { props.onClose }
            />
        </View>
      </Modal>
@@ -42,8 +47,12 @@ class Splash extends React.Component {
     })
   }
 
-  onCloseModal = () => {
-    console.log('teste');
+  onConfirm = () => {
+    this.props.navigation.navigate('Login');
+    this.onClose();
+  }
+
+  onClose = () => {
     this.setState({
       isModalOpen: false
     })
@@ -57,8 +66,9 @@ class Splash extends React.Component {
       <View style={ styles.view }>
 
         <SplashModal
-          onCloseModal = { this.onCloseModal }
-          isVisible    = { isModalOpen } />
+          onConfirm = { this.onConfirm }
+          onClose   = { this.onClose }
+          isVisible = { isModalOpen } />
 
         <StatusBar
           backgroundColor = { theme.statusbar.default_color } />

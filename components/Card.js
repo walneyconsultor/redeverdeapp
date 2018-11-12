@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Banner from '../assets/img/ecologia-e1459743249819.jpg';
 
 import {
   Card,
@@ -17,22 +16,22 @@ const MaterialCard = props => {
     <Card isDark={false} style={{ maxHeight: 420 }}>
       <CardImage
         resizeMode = "cover"
-        source     = { Banner }
-        title      = "Você já possui uma conta?"
+        source     = { props.imageSource }
+        title      = { props.imageTitle }
       />
-       <CardContent text = "Caso já possua uma conta, clique em 'SIM' para poder logar." />
+    <CardContent text = { props.content } />
       <CardAction
         separator = {true}
         inColumn  = {false}>
         <CardButton
-          onPress = {() => {}}
+          onPress = {() => props.onConfirm()}
           title   = "SIM"
           color   = "green"
         />
         <CardButton
-          onPress = {() => props.onCloseModal()}
+          onPress = {() => props.onClose()}
           title   = "NÃO"
-          color   ="green"
+          color   = "green"
         />
       </CardAction>
     </Card>
