@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 
+import firebase from 'react-native-firebase';
 import theme from '../theme/theme.json';
 
-import t from 'tcomb-form-native'; // 0.6.9
-
+import t from 'tcomb-form-native';
 import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
 
-import { View, StyleSheet } from 'react-native';
+import {
+  View,
+  StyleSheet
+} from 'react-native';
 
 const Form = t.form.Form;
-
 const User = t.struct({
   email: t.String,
   password: t.String,
@@ -31,19 +33,21 @@ const formStyles = {
       marginBottom: 7,
       fontWeight: '400'
     }
-  },
+  }
 }
 
 const options = {
   fields: {
     email: {
-      error: 'Without an email address how are you going to reset your password when you forget it?'
+      error: 'Você precisa inserir um email para continuar.'
     },
     password: {
-      error: 'Choose something you use on a dozen other sites or something you won\'t remember'
+      password: true,
+      secureTextEntry: true,
+      error: 'Opa, parece que você deixou algo em branco aqui.'
     },
     terms: {
-      label: 'Agree to Terms',
+      label: 'Termos e condições',
     },
   },
   stylesheet: formStyles,
@@ -52,8 +56,33 @@ const options = {
 class Login extends Component {
 
   handleSubmit = () => {
-    const value = this._form.getValue();
-    console.log('value: ', value);
+
+    const values = this._form.getValue();
+
+    /*
+      If null, the user has passed empty values
+      to the fields. so . . .
+    */
+
+    if(values && values.terms) {
+      // Login the account onto firebase
+
+      const{ email, password } = values;
+
+      firebase.auth().signInWithEmailAndPassword(email, password)
+
+        .then(data => {
+          console.warn(data);
+          // Do something if the user exists.
+        })
+
+        .catch(error => {
+          console.warn(error);
+          // Show some validation content if the user doesn't exist.
+        });
+
+    }
+
   }
 
   render() {
@@ -77,7 +106,7 @@ class Login extends Component {
             textSize         = { 16 }
             width            = { 250 }
             onPress          = { () => this.handleSubmit() }
-            type="secondary">Faça login</AwesomeButtonRick>
+            type="secondary">Entrar</AwesomeButtonRick>
         </View>
 
       </View>
@@ -98,6 +127,13 @@ const styles = StyleSheet.create({
   button: {
     margin: 'auto',
   },
+
+  /*
+    It wouldn't center just by
+    aligning the items to the center, so
+    I had to create another wrapper to wrap
+    just the button.
+  */
 
   buttonWrapper: {
     width: '100%',
