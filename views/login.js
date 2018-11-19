@@ -67,17 +67,17 @@ class Login extends Component {
     if(values && values.terms) {
       // Login the account onto firebase
 
-      const{ email, password } = values;
+      const { email, password } = values;
 
       firebase.auth().signInWithEmailAndPassword(email, password)
 
         .then(data => {
-          console.warn(data);
+          console.log(data);
           // Do something if the user exists.
         })
 
         .catch(error => {
-          console.warn(error);
+          console.log(error);
           // Show some validation content if the user doesn't exist.
         });
 
@@ -105,7 +105,7 @@ class Login extends Component {
             textColor        = { theme.buttons.text_color }
             textSize         = { 16 }
             width            = { 250 }
-            onPress          = { () => this.handleSubmit() }
+            onPress          = { this.handleSubmit }
             type="secondary">Entrar</AwesomeButtonRick>
         </View>
 
